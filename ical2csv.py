@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 
+# Source: https://github.com/erikcox/ical2csv
+
 import sys
 import os.path
 from icalendar import Calendar
@@ -27,7 +29,6 @@ class CalendarEvent:
 
 events = []
 
-
 def open_cal():
     if os.path.isfile(filename):
         if file_extension == 'ics':
@@ -39,8 +40,8 @@ def open_cal():
                 event = CalendarEvent("event")
                 event.uid = component.get('UID')
                 # if component.get('TRANSP') == 'TRANSPARENT': continue #skip event that have not been accepted
-                if component.get('SUMMARY') == None: continue # skip events without a summary
-                event.summary = component.get('SUMMARY')
+                if component.get('SUMMARY') != None:
+                    event.summary = component.get('SUMMARY')
                 if component.get('ORGANIZER') != None:
                     event.organizer = component.get('ORGANIZER').params['CN'] + " <" + component.get('ORGANIZER') + ">"
                 if component.get('ATTENDEE') != None:
